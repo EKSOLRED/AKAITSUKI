@@ -1,3 +1,5 @@
+import { sanitizeHttpUrl } from '../utils/url.utils.js';
+
 const FALLBACK_POSTER = `data:image/svg+xml;utf8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
   <rect width="600" height="900" fill="#141414"/>
@@ -7,8 +9,8 @@ const FALLBACK_POSTER = `data:image/svg+xml;utf8,${encodeURIComponent(`
 </svg>`)} `;
 
 export function getPosterUrl(item = {}) {
-  if (item.posterLocal && String(item.posterLocal).trim()) return String(item.posterLocal).trim();
-  if (item.posterUrl && String(item.posterUrl).trim()) return String(item.posterUrl).trim();
-  if (item.poster && String(item.poster).trim()) return String(item.poster).trim();
+  if (item.posterLocal && String(item.posterLocal).trim()) return sanitizeHttpUrl(item.posterLocal, FALLBACK_POSTER);
+  if (item.posterUrl && String(item.posterUrl).trim()) return sanitizeHttpUrl(item.posterUrl, FALLBACK_POSTER);
+  if (item.poster && String(item.poster).trim()) return sanitizeHttpUrl(item.poster, FALLBACK_POSTER);
   return FALLBACK_POSTER;
 }

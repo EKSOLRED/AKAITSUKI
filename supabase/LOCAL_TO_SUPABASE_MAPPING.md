@@ -8,7 +8,7 @@
 
 В Supabase:
 - `auth.users`
-- `profiles`
+- `profiles` (`role`: user/admin/owner)
 
 ### Примечание
 Пароль из локальной базы переносить нельзя. Пользователи в Supabase создаются через Auth.
@@ -87,9 +87,12 @@
 
 ## about
 Локально:
+- `about.title`
 - `about.description`
 - `about.team[]`
+- `about.socials[]`
 
 В Supabase:
 - `about_content`
 - `team_members`
+- `about_social_links`

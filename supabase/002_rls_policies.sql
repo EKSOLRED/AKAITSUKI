@@ -13,6 +13,7 @@ alter table public.favorites enable row level security;
 alter table public.ratings enable row level security;
 alter table public.about_content enable row level security;
 alter table public.team_members enable row level security;
+alter table public.about_social_links enable row level security;
 
 create or replace function public.is_admin()
 returns boolean
@@ -137,6 +138,12 @@ on public.team_members
 for select
 using (true);
 
+drop policy if exists "about_social_links_public_read" on public.about_social_links;
+create policy "about_social_links_public_read"
+on public.about_social_links
+for select
+using (true);
+
 -- favorites
 drop policy if exists "favorites_own_read" on public.favorites;
 create policy "favorites_own_read"
@@ -242,6 +249,13 @@ with check (public.is_admin());
 drop policy if exists "team_admin_write" on public.team_members;
 create policy "team_admin_write"
 on public.team_members
+for all
+using (public.is_admin())
+with check (public.is_admin());
+
+drop policy if exists "about_social_links_admin_write" on public.about_social_links;
+create policy "about_social_links_admin_write"
+on public.about_social_links
 for all
 using (public.is_admin())
 with check (public.is_admin());

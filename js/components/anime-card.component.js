@@ -48,8 +48,12 @@ export function createAnimeCard(item, ctx) {
   const root = fragment.querySelector('.anime-card');
 
   root.dataset.id = item.id;
-  root.querySelector('.anime-card__poster').src = getPosterUrl(item);
-  root.querySelector('.anime-card__poster').alt = item.title;
+  const poster = root.querySelector('.anime-card__poster');
+  poster.src = getPosterUrl(item);
+  poster.alt = item.title;
+  poster.loading = 'lazy';
+  poster.decoding = 'async';
+  poster.referrerPolicy = 'no-referrer';
   root.querySelector('.anime-card__title').textContent = item.title;
   root.querySelector('.anime-card__description').textContent = item.description;
   root.querySelector('.anime-card__status').textContent = item.displayStatus;

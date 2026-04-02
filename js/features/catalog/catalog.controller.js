@@ -1,3 +1,5 @@
+import { debounce } from '../../utils/debounce.utils.js';
+
 function getFilterLabel(type, value) {
   if (type === 'genre') return value === 'all' ? 'Все жанры' : value;
   if (type === 'status') return value === 'all' ? 'Все статусы' : value;
@@ -27,6 +29,7 @@ function filterFavoriteItems(ctx, filters, kind) {
     .sort((a, b) => {
       if (filters.sort === 'title') return a.title.localeCompare(b.title, 'ru');
       if (filters.sort === 'episodes') return b.addedEpisodes - a.addedEpisodes;
+      if (filters.sort === 'rating') return ctx.animeService.getRatingData(b.id).average - ctx.animeService.getRatingData(a.id).average;
       return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
     });
 }
@@ -107,6 +110,12 @@ export function createCatalogController(ctx) {
   }
 
   function bindGridInteractions(root, page) {
+    const handleSearchInput = debounce((value) => {
+      const kind = page === 'catalog' ? pageState.catalogTab : pageState.favoritesTab;
+      makeFilterState(page, kind).search = value;
+      updateGrid(page);
+    }, 120);
+
     root.addEventListener('click', (event) => {
       const tab = event.target.closest('[data-page-tab]');
       if (tab) {
@@ -169,9 +178,7 @@ export function createCatalogController(ctx) {
 
     root.addEventListener('input', (event) => {
       if (event.target.matches('[data-page-search]')) {
-        const kind = page === 'catalog' ? pageState.catalogTab : pageState.favoritesTab;
-        makeFilterState(page, kind).search = event.target.value;
-        updateGrid(page);
+        handleSearchInput(event.target.value);
       }
     });
   }

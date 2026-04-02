@@ -1,4 +1,5 @@
 import { aboutApi } from '../api/about.api.js';
+import { sanitizeHttpUrl } from '../utils/url.utils.js';
 
 
 function normalizeSocials(input = []) {
@@ -7,8 +8,8 @@ function normalizeSocials(input = []) {
       .map((item) => ({
         id: item.id || crypto.randomUUID(),
         label: String(item.label || '').trim(),
-        icon: String(item.icon || '').trim(),
-        href: String(item.href || item.url || '').trim(),
+        icon: sanitizeHttpUrl(item.icon || '', ''),
+        href: sanitizeHttpUrl(item.href || item.url || '', ''),
       }))
       .filter((item) => item.label || item.icon || item.href);
   }

@@ -17,7 +17,7 @@ $$;
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   display_name text not null,
-  role text not null default 'user' check (role in ('user', 'admin')),
+  role text not null default 'user' check (role in ('user', 'admin', 'owner')),
   avatar_url text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -109,7 +109,18 @@ create table if not exists public.ratings (
 
 create table if not exists public.about_content (
   id int primary key default 1 check (id = 1),
+  title text not null default 'Кто мы такие',
   description text not null default '',
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.about_social_links (
+  id uuid primary key default gen_random_uuid(),
+  label text not null default '',
+  icon_url text,
+  href text not null default '',
+  sort_order int not null default 0,
+  created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
@@ -131,6 +142,7 @@ create index if not exists idx_voiceovers_episode_id on public.voiceovers(episod
 create index if not exists idx_players_voiceover_id on public.players(voiceover_id);
 create index if not exists idx_favorites_title_id on public.favorites(title_id);
 create index if not exists idx_ratings_title_id on public.ratings(title_id);
+create index if not exists idx_about_social_links_sort_order on public.about_social_links(sort_order);
 
 drop trigger if exists trg_profiles_updated_at on public.profiles;
 create trigger trg_profiles_updated_at
@@ -145,6 +157,16 @@ for each row execute function public.set_updated_at();
 drop trigger if exists trg_ratings_updated_at on public.ratings;
 create trigger trg_ratings_updated_at
 before update on public.ratings
+for each row execute function public.set_updated_at();
+
+drop trigger if exists trg_about_content_updated_at on public.about_content;
+create trigger trg_about_content_updated_at
+before update on public.about_content
+for each row execute function public.set_updated_at();
+
+drop trigger if exists trg_about_social_links_updated_at on public.about_social_links;
+create trigger trg_about_social_links_updated_at
+before update on public.about_social_links
 for each row execute function public.set_updated_at();
 
 drop trigger if exists trg_team_members_updated_at on public.team_members;

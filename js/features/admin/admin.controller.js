@@ -126,6 +126,7 @@ export function createAdminController(ctx) {
     page.addEventListener('input', handleInput);
     page.addEventListener('change', handleChange);
     page.addEventListener('dragstart', handleDragStart);
+    page.addEventListener('dragend', handleDragEnd);
     page.addEventListener('dragover', handleDragOver);
     page.addEventListener('drop', handleDrop);
   }
@@ -209,32 +210,6 @@ export function createAdminController(ctx) {
       return rerender();
     }
 
-
-    if (action === 'add-social') {
-      if (!isSuperAdmin()) {
-        showToast('Раздел «О нас» доступен только владельцу', 'error');
-        return;
-      }
-      const aboutDraft = ensureAboutDraft();
-      aboutDraft.socials.push({ id: crypto.randomUUID(), label: '', icon: '', href: '' });
-      return rerender();
-    }
-
-    if (action === 'remove-social') {
-      if (!isSuperAdmin()) {
-        showToast('Раздел «О нас» доступен только владельцу', 'error');
-        return;
-      }
-      const aboutDraft = ensureAboutDraft();
-      aboutDraft.socials = (aboutDraft.socials || []).filter((item) => item.id !== actionNode.dataset.socialId);
-      return rerender();
-    }
-
-    if (action === 'pick-social-icon') {
-      const fileInput = document.querySelector(`[data-about-social-file][data-social-id="${actionNode.dataset.socialId}"]`);
-      fileInput?.click();
-      return;
-    }
 
     if (action === 'add-social') {
       if (!isSuperAdmin()) {
@@ -493,6 +468,11 @@ export function createAdminController(ctx) {
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/plain', row.dataset.socialId || '');
     row.classList.add('is-dragging');
+  }
+
+
+  function handleDragEnd() {
+    document.querySelectorAll('[data-about-social-row].is-dragging').forEach((node) => node.classList.remove('is-dragging'));
   }
 
   function handleDragOver(event) {

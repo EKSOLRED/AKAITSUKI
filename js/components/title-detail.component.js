@@ -118,7 +118,7 @@ export function renderPlayerSection(item, state, escapeHtml, createSelectControl
         </div>
         <div class="player-frame-wrap">
           ${player?.url
-            ? `<iframe class="player-frame" src="${escapeHtml(player.url)}" title="Плеер ${escapeHtml(item.title)}" allowfullscreen loading="lazy"></iframe>`
+            ? `<iframe class="player-frame" src="${escapeHtml(player.url)}" title="Плеер ${escapeHtml(item.title)}" allowfullscreen loading="lazy" referrerpolicy="no-referrer" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-presentation"></iframe>`
             : '<div class="player-empty">Нет такого видео</div>'}
         </div>
       </section>
@@ -137,11 +137,11 @@ export function renderDetailMeta(item, state, escapeHtml, getEpisodesLabel) {
       : `<div class="meta-item"><span>Тип тайтла</span><strong>${escapeHtml(item.titleType || 'Не указан')}</strong></div>`,
     `<div class="meta-item"><span>Возрастной рейтинг</span><strong>${escapeHtml(item.ageRating || '—')}</strong></div>`,
     item.contentType === 'series'
-      ? `<div class="meta-item"><span>Продолжительность серии</span><strong>${escapeHtml(item.director || 'Не указана')}</strong></div>`
+      ? `<div class="meta-item"><span>Режиссёр</span><strong>${escapeHtml(item.director || 'Не указан')}</strong></div>`
       : `<div class="meta-item"><span>Студия</span><strong>${escapeHtml(item.studio || 'Не указана')}</strong></div>`,
     item.contentType === 'series'
       ? `<div class="meta-item"><span>Озвучка</span>${renderExpandableInline(item.voiceovers || ['AKAITSUKI'], state.voiceoversExpanded, 'voiceovers', escapeHtml)}</div>`
-      : `<div class="meta-item"><span>Продолжительность серии</span><strong>${escapeHtml(item.director || 'Не указана')}</strong></div>`,
+      : `<div class="meta-item"><span>Режиссёр</span><strong>${escapeHtml(item.director || 'Не указан')}</strong></div>`,
     `<div class="meta-item"><span>Жанры</span>${renderExpandableInline(item.genres || [], state.genresExpanded, 'genres', escapeHtml)}</div>`,
     item.contentType === 'series'
       ? ''

@@ -8,6 +8,7 @@ import { setupAuthModal } from './ui/auth-modal.js';
 import { showToast } from './ui/toast.js';
 import { getRoute, isTitleRoute, getTitleIdFromRoute } from './utils/route.utils.js';
 import { escapeHtml as escapeHtmlUtil } from './utils/text.utils.js';
+import { sanitizeHttpUrl } from './utils/url.utils.js';
 import { createAnimeCard as createAnimeCardComponent, renderGenreChips as renderGenreChipsComponent } from './components/anime-card.component.js';
 import { renderFilters as renderFiltersComponent } from './components/filters.component.js';
 import { createSelectControl } from './components/select-control.component.js';
@@ -153,7 +154,7 @@ function renderFooter() {
   if (!siteFooter) return;
 
   const about = aboutService.get();
-  const socials = (about.socials || []).filter((item) => item.href);
+  const socials = (about.socials || []).filter((item) => sanitizeHttpUrl(item.href, ''));
   const year = new Date().getFullYear();
 
   siteFooter.innerHTML = `
@@ -167,14 +168,14 @@ function renderFooter() {
         ${socials.map((social) => `
           <a
             class="site-footer__social"
-            href="${escapeHtml(social.href || '#')}"
+            href="${escapeHtml(sanitizeHttpUrl(social.href, '#'))}"
             target="_blank"
             rel="noreferrer noopener"
             data-tooltip="${escapeHtml(social.label || 'Соцсеть')}"
             aria-label="${escapeHtml(social.label || 'Соцсеть')}"
           >
             ${social.icon
-              ? `<img class="site-footer__social-icon" src="${escapeHtml(social.icon)}" alt="" />`
+              ? `<img class="site-footer__social-icon" src="${escapeHtml(sanitizeHttpUrl(social.icon, ''))}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />`
               : `<span class="site-footer__social-fallback" aria-hidden="true">${escapeHtml((social.label || '•').slice(0, 1).toUpperCase())}</span>`}
           </a>
         `).join('')}

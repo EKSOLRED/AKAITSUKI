@@ -8,5 +8,10 @@ export function isTitleRoute(route) {
 }
 
 export function getTitleIdFromRoute(route) {
-  return route.split('/').pop();
+  const raw = route.split('/').pop() || '';
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
 }

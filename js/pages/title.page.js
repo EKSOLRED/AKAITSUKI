@@ -52,7 +52,7 @@ export function renderTitlePage(id, ctx) {
       <section class="section-card glass anime-detail-grid anime-detail-grid--new">
         <div class="detail-poster-card glass-soft">
           <div class="detail-poster-media detail-poster-media--clean">
-            <img class="detail-poster-media__img" src="${escapeHtml(getPosterUrl(item))}" alt="${escapeHtml(item.title)}" />
+            <img class="detail-poster-media__img" src="${escapeHtml(getPosterUrl(item))}" alt="${escapeHtml(item.title)}" loading="eager" decoding="async" referrerpolicy="no-referrer" />
             <div class="rating-badge rating-badge--soft">
               <button class="rating-badge__star" type="button" data-detail-action="toggle-rating" data-tooltip="Поставить оценку">★</button>
               <span class="rating-badge__value" data-tooltip="Средняя оценка пользователей">${rating.average ? rating.average.toFixed(1) : '—'}</span>
