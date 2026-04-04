@@ -1,0 +1,178 @@
+/* Source: 09-v66-targeted-fixes.css */
+
+/* v6.6 targeted fixes */
+body {
+  overflow-y: scroll;
+}
+.app-shell {
+  position: relative;
+}
+.topbar {
+  padding-right: 20px !important;
+}
+.topbar__actions {
+  flex: 0 0 auto;
+}
+.admin-wrench {
+  position: fixed !important;
+  top: 38px !important;
+  right: 24px !important;
+  z-index: 60 !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  transform: none !important;
+}
+.admin-wrench:hover,
+.admin-wrench.active {
+  transform: none !important;
+}
+.favorite-heart::before,
+.favorite-heart::after,
+.favorite-heart__icon::before,
+.favorite-heart__icon::after {
+  content: none !important;
+  display: none !important;
+}
+.favorite-heart {
+  width: 64px !important;
+  height: 64px !important;
+  min-width: 64px !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+.favorite-heart__icon {
+  width: 42px !important;
+  height: 40px !important;
+}
+.favorite-heart__base,
+.favorite-heart__half {
+  opacity: 0;
+}
+.favorite-heart__base {
+  opacity: 1;
+}
+.favorite-heart__base svg,
+.favorite-heart__half svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+.favorite-heart--large {
+  width: 100px !important;
+  height: 100px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+}
+.favorite-heart--large .favorite-heart__icon {
+  width: 62px !important;
+  height: 60px !important;
+}
+.favorite-heart.is-active {
+  color: #ec5f6b !important;
+}
+.favorite-heart.is-active .favorite-heart__base {
+  opacity: 1 !important;
+}
+.favorite-heart.is-active.just-activated .favorite-heart__base,
+.favorite-heart.is-active.just-activated:hover .favorite-heart__base,
+.favorite-heart.is-active.just-activated:focus-visible .favorite-heart__base {
+  opacity: 1 !important;
+}
+.favorite-heart.is-active.just-activated .favorite-heart__half,
+.favorite-heart.is-active.just-activated:hover .favorite-heart__half,
+.favorite-heart.is-active.just-activated:focus-visible .favorite-heart__half {
+  opacity: 0 !important;
+  transform: none !important;
+}
+.favorite-heart.is-active:hover .favorite-heart__base,
+.favorite-heart.is-active:focus-visible .favorite-heart__base,
+.favorite-heart.is-breaking .favorite-heart__base {
+  opacity: 0 !important;
+}
+.favorite-heart.is-active:hover .favorite-heart__half,
+.favorite-heart.is-active:focus-visible .favorite-heart__half,
+.favorite-heart.is-breaking .favorite-heart__half {
+  opacity: 1 !important;
+}
+.favorite-heart.is-active:hover .favorite-heart__half--left,
+.favorite-heart.is-active:focus-visible .favorite-heart__half--left {
+  transform: translateX(-4px) rotate(-9deg) !important;
+}
+.favorite-heart.is-active:hover .favorite-heart__half--right,
+.favorite-heart.is-active:focus-visible .favorite-heart__half--right {
+  transform: translateX(4px) rotate(9deg) !important;
+}
+.anime-card__actions {
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+}
+.anime-card__actions .button {
+  min-width: 0;
+}
+.anime-card__actions .favorite-heart {
+  justify-self: center !important;
+  align-self: center !important;
+}
+.detail-poster-card {
+  overflow: visible !important;
+}
+.detail-poster-media {
+  padding-bottom: 118px !important;
+}
+.detail-poster-actions,
+.detail-poster-actions--centered {
+  left: 50% !important;
+  right: auto !important;
+  bottom: 18px !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  pointer-events: none !important;
+}
+.detail-poster-actions .favorite-heart,
+.detail-poster-actions--centered .favorite-heart {
+  pointer-events: auto !important;
+  display: inline-grid !important;
+  margin: 0 !important;
+}
+.rating-badge,
+.rating-badge--soft {
+  top: 22px !important;
+  right: 20px !important;
+  padding: 7px 12px !important;
+  gap: 8px !important;
+  border-radius: 16px !important;
+}
+.rating-badge__star {
+  font-size: 17px !important;
+}
+.rating-badge__value {
+  font-size: 15px !important;
+}
+.admin-quick-actions {
+  display: none !important;
+}
+.admin-list-rows {
+  max-height: min(620px, calc(100vh - 260px)) !important;
+  overflow: auto !important;
+  padding-right: 6px;
+}
+.admin-scroll-fab {
+  position: fixed !important;
+  right: 28px !important;
+  bottom: 28px !important;
+  z-index: 70 !important;
+}
+@media (max-width: 900px) {
+  .admin-wrench {
+    top: 30px !important;
+    right: 18px !important;
+  }
+  .admin-scroll-fab {
+    right: 18px !important;
+    bottom: 18px !important;
+  }
+}

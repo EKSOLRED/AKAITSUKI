@@ -1,0 +1,140 @@
+/* Source: 16-favorite-simple-hover.css */
+
+/* === Final favorite heart override: simple hover + smooth remove === */
+.favorite-heart,
+.favorite-heart::before,
+.favorite-heart::after,
+.favorite-heart__icon::before,
+.favorite-heart__icon::after {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.favorite-heart {
+  cursor: pointer !important;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.favorite-heart *,
+.favorite-heart svg,
+.favorite-heart path {
+  pointer-events: none !important;
+  cursor: pointer !important;
+}
+
+.favorite-heart__icon {
+  transform-origin: center;
+  transition:
+    transform .22s ease,
+    opacity .22s ease,
+    filter .22s ease !important;
+}
+
+.favorite-heart__base {
+  opacity: 1 !important;
+  transform: none !important;
+  transition:
+    transform .22s ease,
+    opacity .22s ease !important;
+}
+
+.favorite-heart__half,
+.favorite-heart__half--left,
+.favorite-heart__half--right {
+  opacity: 0 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+.favorite-heart.is-active,
+.favorite-heart.is-active:hover,
+.favorite-heart.is-active:focus-visible,
+.favorite-heart.is-active.hover-locked:hover,
+.favorite-heart.is-active.hover-locked:focus-visible {
+  color: #ef6570 !important;
+}
+
+.favorite-heart:hover {
+  color: rgba(245, 247, 255, .98) !important;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, .16));
+}
+
+.favorite-heart.is-active:hover,
+.favorite-heart.is-active:focus-visible,
+.favorite-heart.is-active.hover-locked:hover,
+.favorite-heart.is-active.hover-locked:focus-visible {
+  filter: drop-shadow(0 0 8px rgba(239, 101, 112, .22)) !important;
+}
+
+.favorite-heart.hover-locked:hover,
+.favorite-heart.hover-locked:focus-visible {
+  filter: none !important;
+}
+
+.favorite-heart.is-active.hover-locked:hover,
+.favorite-heart.is-active.hover-locked:focus-visible {
+  filter: drop-shadow(0 0 8px rgba(239, 101, 112, .18)) !important;
+}
+
+.favorite-heart.is-active.allow-active-hover:hover .favorite-heart__icon,
+.favorite-heart.is-active.allow-active-hover:focus-visible .favorite-heart__icon {
+  transform: scale(1.08);
+}
+
+.favorite-heart.is-active.just-activated .favorite-heart__icon,
+.favorite-heart.is-active.just-activated:hover .favorite-heart__icon,
+.favorite-heart.is-active.just-activated:focus-visible .favorite-heart__icon {
+  transform: none !important;
+}
+
+.favorite-heart.is-popping .favorite-heart__icon {
+  animation: favoriteHeartBeat .42s ease forwards !important;
+}
+
+.favorite-heart.is-removing .favorite-heart__icon {
+  animation: favoriteHeartRemove .38s ease forwards !important;
+}
+
+.favorite-heart.is-resetting .favorite-heart__icon {
+  animation: favoriteHeartReset .24s ease forwards !important;
+}
+
+@keyframes favoriteHeartBeat {
+  0% { transform: scale(1); }
+  20% { transform: scale(.9); }
+  45% { transform: scale(1.18); }
+  65% { transform: scale(.98); }
+  100% { transform: scale(1); }
+}
+
+@keyframes favoriteHeartRemove {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  45% {
+    opacity: .88;
+    transform: scale(.92);
+    filter: blur(.2px);
+  }
+  100% {
+    opacity: .28;
+    transform: scale(.78);
+    filter: blur(.8px);
+  }
+}
+
+@keyframes favoriteHeartReset {
+  0% {
+    opacity: .28;
+    transform: scale(.78);
+    filter: blur(.8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}

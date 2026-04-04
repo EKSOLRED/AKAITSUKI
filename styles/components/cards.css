@@ -1,0 +1,144 @@
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+.anime-card {
+  overflow: hidden;
+  border-radius: 26px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-self: start;
+  height: 100%;
+  contain: layout paint;
+}
+.anime-card__poster-wrap { position: relative; aspect-ratio: 16/10; overflow: hidden; }
+.anime-card__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .45s ease;
+}
+.anime-card:hover .anime-card__poster { transform: scale(1.04); }
+.anime-card__status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(12, 12, 18, .65);
+  color: #fff;
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+}
+.anime-card__content {
+  display: grid;
+  grid-template-rows: auto minmax(58px, auto) minmax(96px, auto) minmax(40px, auto) auto;
+  gap: 14px;
+  padding: 20px;
+  min-height: 0;
+}
+.anime-card__meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.anime-card__title { margin: 0; font-size: 21px; min-height: 58px; align-self: start; }
+.anime-card__description {
+  margin: 0;
+  min-height: 96px;
+  max-height: 96px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  overflow: hidden;
+  position: relative;
+}
+.anime-card__description::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(19, 19, 27, 0) 0%, var(--surface) 100%);
+  pointer-events: none;
+}
+html[data-theme='light'] .anime-card__description::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--surface) 100%);
+}
+.chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; align-content: flex-start; }
+.chip,
+.genre-toggle {
+  min-height: 34px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 12px;
+}
+.chip {
+  background: var(--accent-soft);
+  border: 1px solid rgba(216,74,74,.12);
+}
+.anime-card__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: auto; }
+.anime-card__actions .button { width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+.anime-detail {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) 1fr;
+  gap: 24px;
+}
+.poster-large {
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.info-stack { display: grid; gap: 18px; }
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 12px;
+}
+.meta-item {
+  padding: 14px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.meta-item > span { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+.video-placeholder {
+  min-height: 280px;
+  border-radius: 24px;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(216,74,74,.10), rgba(124,80,255,.10));
+  border: 1px dashed rgba(216,74,74,.3);
+  color: var(--text-muted);
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 1fr .9fr;
+  gap: 24px;
+}
+.form-grid { display: grid; gap: 12px; }
+.form-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.table-like { display: grid; gap: 12px; }
+.row-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.row-card__title { font-weight: 700; }
+.row-card__meta { color: var(--text-muted); font-size: 14px; margin-top: 4px; }

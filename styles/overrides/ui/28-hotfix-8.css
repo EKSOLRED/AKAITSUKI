@@ -1,0 +1,74 @@
+/* Source: 28-hotfix-8.css */
+
+/* === hotfix 8: about socials + remove title back button spacing === */
+.about-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.about-social-button {
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(216, 74, 74, 0.18);
+  background: linear-gradient(180deg, rgba(24, 24, 34, 0.96), rgba(16, 16, 24, 0.96));
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform .18s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
+}
+
+.about-social-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(216, 74, 74, 0.34);
+  box-shadow: 0 14px 26px rgba(0,0,0,.16), 0 0 0 4px rgba(216,74,74,.06);
+}
+
+.about-social-button__icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+html[data-theme='light'] .about-social-button {
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(241,242,247,0.98));
+  color: #232634;
+  border-color: rgba(25, 25, 35, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), 0 8px 18px rgba(39, 43, 65, 0.06);
+}
+
+.admin-socials-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.about-social-admin-row {
+  padding: 14px;
+  border-radius: 20px;
+}
+
+.about-social-admin-row__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.about-social-admin-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hidden-file-input {
+  display: none !important;
+}
+
+.detail-bottom-actions {
+  display: none !important;
+}
