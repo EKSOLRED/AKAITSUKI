@@ -1,0 +1,59 @@
+AKAITSUKI + Supabase: быстрый старт
+
+Текущее состояние архива:
+- авторизация через Supabase включена
+- регистрация через Supabase включена
+- восстановление пароля через Supabase включено
+- роли читаются из таблицы public.profiles
+- каталог/избранное/контент пока остаются в локальном режиме dataMode=local
+
+Заполнено:
+- URL проекта
+- Publishable key
+- Supabase auth включён
+
+Что сделать в Supabase Dashboard:
+
+1) Authentication -> Sign In / Providers
+   - включить Email provider
+
+2) Authentication -> URL Configuration
+   - Site URL:
+     http://localhost:5500
+     или твой прод-домен
+   - Redirect URLs:
+     http://localhost:5500/
+     https://your-domain.com/
+   Если нужен отдельный reset route, добавь и его
+
+3) SQL Editor
+   Запускай по порядку:
+   - supabase/004_profiles_schema.sql
+   - supabase/005_profiles_rls.sql
+
+4) Зарегистрируй аккаунт через сайт
+
+5) После регистрации сделай себя владельцем:
+   - открой supabase/006_make_owner.sql
+   - замени email
+   - выполни SQL
+
+6) Проверка
+   - выйди
+   - зайди снова
+   - проверь доступ в админку
+
+Важно:
+- service_role key в клиентский JS не вставлять
+- publishable key можно использовать в браузере
+- доступ к public.profiles защищён RLS
+
+Если вход не работает:
+- проверь что Email auth включён
+- проверь что profiles таблица создана
+- проверь что Redirect URLs заполнены
+- проверь что в js/config/supabase.config.js enabled=true
+
+Для публикации:
+- замени redirectTo при необходимости
+- в Supabase URL Configuration укажи боевой домен

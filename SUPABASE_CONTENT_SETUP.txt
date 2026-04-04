@@ -1,0 +1,23 @@
+Шаги для полного перевода контента на Supabase
+
+1. В панели Supabase открой SQL Editor
+2. Выполни по порядку:
+   - supabase/004_profiles_schema.sql
+   - supabase/005_profiles_rls.sql
+   - supabase/007_content_schema.sql
+   - supabase/008_content_rls.sql
+3. Зарегистрируйся через сайт
+4. Выполни supabase/006_make_owner.sql, заменив email на свой
+5. Перезайди в аккаунт
+
+Что будет дальше:
+- Авторизация уже через Supabase
+- Тайтлы будут читаться из public.titles
+- Избранное будет писаться в public.favorites
+- Рейтинги будут писаться в public.title_ratings
+- Блок О нас будет читаться из public.site_content
+- Админка будет писать в Supabase
+
+Важно:
+- При первом входе владельца, если таблицы пустые, сайт попробует автоматически перенести текущие локальные тайтлы и блок О нас в Supabase.
+- Кнопка «Сбросить demo-данные» в режиме Supabase отключена.
