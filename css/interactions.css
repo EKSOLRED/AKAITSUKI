@@ -1,0 +1,186 @@
+/* Interaction states, toasts, focus, motion */
+
+.page-scroll-btn {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 180, 162, 0.22);
+  background: linear-gradient(135deg, rgba(193, 18, 31, 0.92), rgba(255, 90, 95, 0.78));
+  color: #fff;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(12px) scale(0.92);
+  pointer-events: none;
+  z-index: 120;
+}
+
+.page-scroll-btn.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.page-scroll-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 24px 42px rgba(193, 18, 31, 0.34);
+}
+
+.page-scroll-btn:active {
+  transform: scale(0.94);
+}
+
+.page-scroll-btn-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.search-box:focus-within,
+.select-trigger:focus-visible,
+.select-option:focus-visible,
+.btn:focus-visible,
+.icon-btn:focus-visible,
+.favorite-btn:focus-visible,
+.modal-close:focus-visible,
+#login-btn:focus-visible,
+.user-action-btn:focus-visible,
+.user-link:focus-visible,
+.page-scroll-btn:focus-visible,
+.search-clear-badge:focus-visible,
+.auth-tab:focus-visible,
+.hero-random-btn:focus-visible,
+.auth-form input:focus-visible,
+.account-form input:focus-visible,
+.tag-more-btn:focus-visible {
+  outline: 2px solid rgba(255, 180, 162, 0.9);
+  outline-offset: 2px;
+  border-color: rgba(255, 180, 162, 0.42);
+}
+
+@keyframes floatGlow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(30px, -20px, 0) scale(1.15);
+  }
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes favoriteBorderOn {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 0 100% 0 round var(--radius));
+    box-shadow: 0 0 0 rgba(255, 90, 95, 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round var(--radius));
+    box-shadow: 0 0 36px rgba(255, 90, 95, 0.28);
+  }
+}
+
+@keyframes favoriteBorderOff {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round var(--radius));
+    box-shadow: 0 0 28px rgba(255, 90, 95, 0.24);
+  }
+  100% {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0 round var(--radius));
+    box-shadow: 0 0 0 rgba(255, 90, 95, 0);
+  }
+}
+
+
+.site-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 12px);
+  min-width: min(420px, calc(100vw - 32px));
+  max-width: min(520px, calc(100vw - 32px));
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(20, 6, 11, 0.92);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  z-index: 160;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+body.light .site-toast {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(177, 18, 38, 0.16);
+  box-shadow: 0 22px 54px rgba(177, 18, 38, 0.18);
+}
+
+body.light .site-toast[data-state="error"] {
+  background: rgba(255, 244, 245, 0.99);
+  border-color: rgba(177, 18, 38, 0.24);
+  color: #9e1831;
+}
+
+body.light .site-toast[data-state="success"] {
+  background: rgba(255, 250, 247, 0.99);
+  border-color: rgba(196, 95, 56, 0.2);
+  color: #8f2b22;
+}
+
+.site-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.site-toast[data-state="error"] {
+  border-color: rgba(255, 120, 120, 0.35);
+  color: #ffb3b7;
+}
+
+.site-toast[data-state="success"] {
+  border-color: rgba(255, 180, 162, 0.35);
+}
+
+
+body.has-open-dialog .topbar-stack {
+  filter: blur(10px);
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+body.has-open-dialog .page-scroll-btn {
+  opacity: 0;
+  pointer-events: none;
+}

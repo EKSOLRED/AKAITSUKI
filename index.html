@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AKAITSUKI — каталог аниме и сериалов с красивой подачей, фильтрами, избранным и страницами тайтлов." />
+  <title>AKAITSUKI | Каталог</title>
+    <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/catalog.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/interactions.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.runtime.js"></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div class="site-bg" aria-hidden="true">
+    <span class="glow glow-1"></span>
+    <span class="glow glow-2"></span>
+    <span class="glow glow-3"></span>
+    <div class="grid-noise"></div>
+  </div>
+
+  <div class="topbar-stack">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="На главную AKAITSUKI">
+        <span class="brand-mark"></span>
+        <div>
+          <strong>AKAITSUKI</strong>
+          <small>каталог релизов команды</small>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Навигация по сайту">
+        <a href="#home" data-view-link="home">Главная</a>
+        <a href="#catalog" data-view-link="catalog">Каталог</a>
+        <a href="#favorites" data-view-link="favorites">Избранное</a>
+        <a href="#about" data-view-link="about">О нас</a>
+      </nav>
+
+      <div class="topbar-user">
+        <button id="login-btn" type="button">Вход / Регистрация</button>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Переключить тему">
+          <span>☼</span>
+        </button>
+        <a class="btn btn-primary topbar-cta" href="#catalog">Смотреть релизы</a>
+      </div>
+    </header>
+
+    <div class="utility-strip auth-only" hidden>
+      <div class="utility-badge glass" id="userActionsBar" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <main>
+    <div class="page-view is-active" data-view="home">
+      <section class="hero section" id="hero">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">Коллекция проекта</span>
+          <h1>Каталог аниме и сериалов с живой подачей и тёплой атмосферой команды AKAITSUKI</h1>
+          <p>
+            Аккуратная витрина релизов для вашей команды: фильтры, поиск, избранное,
+            отдельная страница тайтла, личный кабинет и мягкие анимации без тяжёлых фреймворков.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#catalog">Открыть каталог</a>
+            <a class="btn btn-secondary" href="#about">О нас</a>
+          </div>
+
+          <div class="hero-stats">
+            <article class="stat-card glass reveal">
+              <span class="stat-value" data-counter="0">0</span>
+              <span class="stat-label">тайтлов в базе</span>
+            </article>
+            <article class="stat-card glass reveal">
+              <span class="stat-value" data-counter="0">0</span>
+              <span class="stat-label">типа контента</span>
+            </article>
+            <article class="stat-card glass reveal">
+              <span class="stat-value" data-counter="0">0</span>
+              <span class="stat-label">жанровых тегов</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="hero-panel glass reveal">
+          <div class="hero-panel-head hero-panel-head-spread">
+            <button class="hero-random-btn" id="heroShuffleBtn" type="button">
+              <span>Случайный тайтл</span>
+            </button>
+          </div>
+          <div class="hero-feature" id="heroFeature"></div>
+        </div>
+      </section>
+
+      <section class="updates section reveal" id="recentUpdatesSection">
+        <div class="section-heading section-heading-left">
+          <div>
+            <span class="eyebrow">Последние обновления</span>
+            <h2>Свежие серии и новые эпизоды</h2>
+          </div>
+        </div>
+        <div class="updates-grid" id="recentUpdatesGrid"></div>
+      </section>
+
+      <section class="updates section reveal" id="newVideosSection">
+        <div class="section-heading section-heading-left">
+          <div>
+            <span class="eyebrow">Новые видео, трейлеры</span>
+            <h2>Свежие видео и новые трейлеры</h2>
+          </div>
+        </div>
+        <div class="cards-grid" id="newVideosGrid"></div>
+      </section>
+    </div>
+
+    <div class="page-view" data-view="catalog">
+      <section class="controls section reveal" id="catalog">
+        <div id="catalogControls"></div>
+      </section>
+
+      <section class="catalog section catalog-section" aria-labelledby="catalogHeading">
+        <h2 class="visually-hidden" id="catalogHeading">Каталог релизов</h2>
+        <div class="cards-grid" id="cardsGrid"></div>
+        <div class="catalog-pagination" id="catalogPagination" aria-label="Страницы каталога"></div>
+        <div class="empty-state glass" id="emptyState" hidden>
+          <h3>Ничего не найдено</h3>
+          <p>Попробуй сменить фильтр или убрать часть запроса.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="page-view" data-view="favorites">
+      <section class="controls section reveal" id="favoritesSection">
+        <div id="favoritesControls"></div>
+      </section>
+
+      <section class="catalog section catalog-section" aria-labelledby="favoritesHeading">
+        <h2 class="visually-hidden" id="favoritesHeading">Избранные тайтлы</h2>
+        <div class="cards-grid" id="favoritesGrid"></div>
+        <div class="catalog-pagination" id="favoritesPagination" aria-label="Страницы избранного"></div>
+        <div class="empty-state glass" id="favoritesEmptyState" hidden>
+          <h3>Избранное пока пустое</h3>
+          <p>Добавь тайтлы сердечком, и они появятся здесь.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="page-view" data-view="about">
+      <section class="about section reveal" id="about">
+        <div class="section-heading section-heading-left">
+          <div>
+            <span class="eyebrow">О нас</span>
+            <h2>Кто мы такие</h2>
+          </div>
+        </div>
+
+        <div class="about-layout glass">
+          <div class="about-copy">
+            <h3>Мы собираем каталог, который выглядит как витрина, а не как таблица.</h3>
+            <p>
+              AKAITSUKI собирает аниме, сериалы и будущие релизы в одну аккуратную сцену,
+              где каждый тайтл выглядит отдельно и запоминается не только названием, но и подачей.
+            </p>
+            <p>
+              Сейчас это гибкая база для публикации, сортировки и быстрого просмотра проектов.
+              Дальше сюда можно добавить полноценную админку на Supabase, роли, загрузку постеров,
+              заметки команды и отдельные страницы релизов с контентом.
+            </p>
+          </div>
+
+          <section class="team-panel" aria-labelledby="teamPanelHeading">
+            <h3 id="teamPanelHeading">Члены команды</h3>
+            <ul class="team-list">
+              <li><span>Аки</span><small>координатор релизов</small></li>
+              <li><span>Рэн</span><small>frontend и UI</small></li>
+              <li><span>Мэй</span><small>редактор каталога</small></li>
+              <li><span>Кай</span><small>тайтл-менеджер</small></li>
+              <li><span>Юна</span><small>оформление и постеры</small></li>
+            </ul>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <div class="page-view" data-view="title">
+      <section class="title-page section" id="titlePage">
+        <div class="title-page-toolbar">
+          <button class="btn btn-secondary" id="backToCatalogBtn" type="button">← Назад</button>
+        </div>
+        <div id="titlePageContent"></div>
+      </section>
+    </div>
+
+
+
+    <div class="page-view" data-view="admin">
+      <section class="admin section" id="admin">
+        <div class="section-heading section-heading-left">
+          <div>
+            <h2>Управление каталогом и ролями</h2>
+          </div>
+        </div>
+        <div id="adminPageContent"></div>
+      </section>
+    </div>
+
+    <div class="page-view" data-view="account">
+      <section class="account section" id="account">
+        <div class="section-heading section-heading-left">
+          <div>
+            <span class="eyebrow">Кабинет</span>
+            <h2>Личный кабинет</h2>
+          </div>
+        </div>
+
+        <div class="account-layout">
+          <article class="account-card glass">
+            <h3>Профиль</h3>
+            <p class="account-muted">
+              Можно сменить никнейм и почту. Пока проект локальный, ограничение на смену никнейма работает как подсказка на этом устройстве.
+              После полной интеграции реальная проверка должна идти через Supabase.
+            </p>
+            <form id="profileForm" class="account-form">
+              <label>
+                <span>Никнейм</span>
+                <input id="profileNickname" type="text" maxlength="40" placeholder="Введите никнейм" />
+              </label>
+              <label>
+                <span>Почта</span>
+                <input id="profileEmail" type="email" placeholder="Введите почту" />
+              </label>
+              <button class="btn btn-primary" type="submit">Сохранить профиль</button>
+            </form>
+          </article>
+
+          <article class="account-card glass">
+            <h3>Безопасность</h3>
+            <p class="account-muted">
+              Обновить пароль для аккаунта. Для смены почты укажи новый адрес и подтверди изменение через письмо,
+              если в Supabase включена защита смены email.
+            </p>
+            <form id="passwordForm" class="account-form">
+              <label>
+                <span>Новый пароль</span>
+                <input id="profilePassword" type="password" minlength="6" placeholder="Новый пароль" />
+              </label>
+              <label>
+                <span>Повтори пароль</span>
+                <input id="profilePasswordRepeat" type="password" minlength="6" placeholder="Повтори пароль" />
+              </label>
+              <button class="btn btn-secondary" type="submit">Обновить пароль</button>
+            </form>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 AKAITSUKI. Каталог релизов команды.</p>
+    <div class="footer-links">
+      <a href="#home">Главная</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#favorites">Избранное</a>
+      <a href="#about">О нас</a>
+    </div>
+  </footer>
+
+  <div class="modal" id="detailsModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-dialog glass" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+      <button class="modal-close" type="button" data-close-modal aria-label="Закрыть">×</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+  <div class="modal video-modal" id="videoModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-video-modal></div>
+    <div class="video-modal-dialog glass" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle" tabindex="-1">
+      <div class="modal-content" id="videoModalContent"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="trailerLinkModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-trailer-link-modal></div>
+    <div class="modal-dialog glass trailer-link-dialog" role="dialog" aria-modal="true" aria-labelledby="trailerLinkModalTitle" tabindex="-1">
+      <button class="modal-close" type="button" data-close-trailer-link-modal aria-label="Закрыть">×</button>
+      <div class="trailer-link-shell">
+        <div class="auth-header">
+          <span class="eyebrow">Привязка трейлера</span>
+          <h2 id="trailerLinkModalTitle">Выбери тайтл</h2>
+          <p>Найди аниме или сериал и привяжи к трейлеру нужный проект.</p>
+        </div>
+        <label class="search-box admin-search-box" for="trailerLinkSearchInput">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <span class="visually-hidden">Поиск тайтла для привязки трейлера</span>
+          <input id="trailerLinkSearchInput" type="text" inputmode="search" enterkeyhint="search" autocomplete="off" spellcheck="false" placeholder="Поиск тайтла" />
+        </label>
+        <div class="admin-role-search-results" id="trailerLinkResults"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal auth-modal" id="authModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-auth-modal></div>
+    <div class="auth-dialog glass" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" tabindex="-1">
+      <button class="modal-close" type="button" data-close-auth-modal aria-label="Закрыть">×</button>
+      <div class="auth-shell">
+        <div class="auth-header">
+          <span class="eyebrow">AKAITSUKI ID</span>
+          <h2 id="authModalTitle">Вход и регистрация</h2>
+          <p>Один аккуратный портал для каталога, избранного и кабинета.</p>
+        </div>
+
+        <div class="auth-tabs" role="tablist" aria-label="Вход или регистрация">
+          <button class="auth-tab is-active" id="authLoginTab" data-auth-tab="login" type="button" role="tab" aria-selected="true" aria-controls="authLoginPanel">Вход</button>
+          <button class="auth-tab" id="authRegisterTab" data-auth-tab="register" type="button" role="tab" aria-selected="false" aria-controls="authRegisterPanel">Регистрация</button>
+        </div>
+
+        <form class="auth-form" id="authLoginPanel" data-auth-panel="login" role="tabpanel" aria-labelledby="authLoginTab" aria-hidden="false">
+          <label>
+            <span>Почта</span>
+            <input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </label>
+          <label>
+            <span>Пароль</span>
+            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Ваш пароль" required />
+          </label>
+          <button class="btn btn-primary auth-submit" type="submit">Войти</button>
+        </form>
+
+        <form class="auth-form" id="authRegisterPanel" data-auth-panel="register" role="tabpanel" aria-labelledby="authRegisterTab" aria-hidden="true" hidden>
+          <label>
+            <span>Никнейм</span>
+            <input id="registerNickname" type="text" maxlength="40" placeholder="Как тебя называть?" required />
+          </label>
+          <label>
+            <span>Почта</span>
+            <input id="registerEmail" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </label>
+          <label>
+            <span>Пароль</span>
+            <input id="registerPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Минимум 6 символов" required />
+          </label>
+          <label>
+            <span>Повтори пароль</span>
+            <input id="registerPasswordRepeat" type="password" autocomplete="new-password" minlength="6" placeholder="Повтори пароль" required />
+          </label>
+          <button class="btn btn-primary auth-submit" type="submit">Создать аккаунт</button>
+        </form>
+
+        <p class="auth-status" id="authStatus" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-toast" id="siteToast" hidden aria-live="polite"></div>
+
+  <button class="page-scroll-btn" id="pageScrollBtn" type="button" aria-label="Прокрутить страницу" hidden>
+    <span class="page-scroll-btn-icon" aria-hidden="true">↓</span>
+  </button>
+</body>
+</html>
