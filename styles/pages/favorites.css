@@ -1,7 +1,0 @@
-/* Aggregator for favorites. Keeps cascade order intact. */
-@import url('./favorites/11-favorite-scroll-overrides.css');
-@import url('./favorites/12-favorite-interaction-tune.css');
-@import url('./favorites/13-favorite-interaction-fix.css');
-@import url('./favorites/14-favorite-authoritative-fix.css');
-@import url('./favorites/15-favorite-smooth-active-removal.css');
-@import url('./favorites/16-favorite-simple-hover.css');
